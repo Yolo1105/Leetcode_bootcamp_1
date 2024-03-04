@@ -1,0 +1,22 @@
+import java.util.Arrays;
+
+class Solution {
+    public int videoStitching(int[][] clips, int time) {
+        Arrays.sort(clips, (a, b) -> a[0] - b[0]);
+        int numClips = clips.length;
+        int currentEnd = 0, farthestReach = 0, totalClips = 0;
+        int clipIndex = 0;
+        
+        while (currentEnd < time) {
+            totalClips++;
+            while (clipIndex < numClips && currentEnd >= clips[clipIndex][0]) {
+                farthestReach = Math.max(farthestReach, clips[clipIndex++][1]);
+            }
+            if (farthestReach == currentEnd) {
+                return -1;
+            }
+            currentEnd = farthestReach;
+        }
+        return totalClips;
+    }
+}
